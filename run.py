@@ -1,7 +1,7 @@
 import torch
 import json
 import torch.optim as optim
-from transformers import T5ForConditionalGeneration, AutoTokenizer
+from transformers import LongT5ForConditionalGeneration, T5ForConditionalGeneration, AutoTokenizer
 from torchmetrics.text.rouge import ROUGEScore
 from data import data_helper
 from pprint import pprint
@@ -24,13 +24,14 @@ def train_epoch(config, epoch, train_loader, val_loader, model, optimizer, metri
         text_input_ids = batch['text_input_ids'].cuda()
         text_attention_mask = batch['text_attention_mask'].cuda()
         label_input_ids = batch['label_input_ids'].cuda()
-        label_attention_mask = batch['label_attention_mask'].cuda()
+        # label_attention_mask = batch['label_attention_mask'].cuda()
 
         output = model(
             input_ids=text_input_ids,
             attention_mask=text_attention_mask,
-            decoder_input_ids=label_input_ids,
-            decoder_attention_mask=label_attention_mask
+            # decoder_input_ids=label_input_ids,
+            # decoder_attention_mask=label_attention_mask
+            labels=label_input_ids
         )
 
         loss = output.loss
@@ -89,8 +90,9 @@ def train(config):
 
     device = torch.device('cuda:0')
 
-    tokenizer = AutoTokenizer.from_pretrained("t5-base")
-    model = T5ForConditionalGeneration.from_pretrained(config.model_config).to(device)
+    tokenizer = AutoTokenizer.from_pretrained(config.model_config)
+    # model = T5ForConditionalGeneration.from_pretrained(config.model_config).to(device)
+    model = LongT5ForConditionalGeneration.from_pretrained(config.model_config).to(device)
     optimizer = optim.AdamW(model.parameters(), lr=config.init_lr, weight_decay=config.weight_decay)
     metric = ROUGEScore()
 

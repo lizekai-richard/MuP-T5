@@ -8,7 +8,8 @@ def parse_option():
     # default settings
     parser.add_argument('--save', type=str, default='MuP')
     parser.add_argument('--dataset', type=str, default='allenai/mup')
-
+    parser.add_argument('--train_path', type=str, default='/home/MuP-T5/mup/training.csv')
+    parser.add_argument('--val_path', type=str, default='/home/MuP-T5/mup/validation.csv')
     # training
     parser.add_argument('--num_epochs', default=10, type=int, metavar='N',
                         help='number of total epochs to run')
@@ -59,5 +60,4 @@ def main():
 
 
 if __name__ == '__main__':
-
     main()
