@@ -39,10 +39,10 @@ def train_epoch(config, epoch, train_loader, val_loader, model, optimizer, metri
         loss.backward()
         optimizer.step()
 
-        if batch_idx % config.train_checkpoint == 0:
-            print("Epoch: {:3d} | Batch: {:6d} | Loss: {:8.6f} ".format(epoch, batch_idx, loss.item()))
+        if (batch_idx + 1) % config.train_checkpoint == 0:
+            print("Epoch: {:3d} | Batch: {:6d} | Loss: {:8.6f} ".format(epoch, batch_idx + 1, loss.item()))
 
-        if batch_idx % config.eval_checkpoint == 0:
+        if (batch_idx + 1) % config.eval_checkpoint == 0:
             predictions, targets, rouge_score = evaluate(val_loader, model, metric, tokenizer)
             pprint(rouge_score)
             save_log(batch_idx, predictions, targets, rouge_score)
