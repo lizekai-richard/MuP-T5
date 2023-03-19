@@ -8,6 +8,10 @@ from pprint import pprint
 
 
 def save_log(batch_idx, predictions, targets, rouge_scores):
+
+    for key in rouge_scores.keys():
+        rouge_scores[key] = rouge_scores[key].item()
+
     with open("log/preds/prediction_{}".format(batch_idx), "w") as f:
         json.dump(predictions, f)
 
