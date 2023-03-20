@@ -12,13 +12,13 @@ def save_log(batch_idx, predictions, targets, rouge_scores):
     for key in rouge_scores.keys():
         rouge_scores[key] = rouge_scores[key].item()
 
-    with open("log/preds/prediction_{}".format(batch_idx), "w") as f:
+    with open("log-T5/preds/prediction_{}".format(batch_idx), "w") as f:
         json.dump(predictions, f)
 
-    with open("log/targets/target_{}".format(batch_idx), "w") as f:
+    with open("log-T5/targets/target_{}".format(batch_idx), "w") as f:
         json.dump(targets, f)
 
-    with open("log/metrics/rouge_score_{}".format(batch_idx), "w") as f:
+    with open("log-T5/metrics/rouge_score_{}".format(batch_idx), "w") as f:
         json.dump(rouge_scores, f)
 
 
