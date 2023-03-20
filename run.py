@@ -98,9 +98,11 @@ def train(config):
     # model = T5ForConditionalGeneration.from_pretrained(config.model_config).to(device)
     model = LongT5ForConditionalGeneration.from_pretrained(config.model_config).to(device)
     optimizer = optim.AdamW(model.parameters(), lr=config.init_lr, weight_decay=config.weight_decay)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, config.lr_decay_step, config.lr_decay_rate)
     metric = ROUGEScore()
 
     train_loader, val_loader = data_helper(config)
 
     for epoch in range(config.num_epochs):
         train_epoch(config, epoch, train_loader, val_loader, model, optimizer, metric, tokenizer)
+        scheduler.step()

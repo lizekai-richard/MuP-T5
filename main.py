@@ -17,7 +17,7 @@ def parse_option():
                         help='batch_size')
     parser.add_argument('--init_lr', type=float, default=1e-5,
                         help='learning rate')
-    parser.add_argument('--lr_decay_rate', type=float, default=0.1,
+    parser.add_argument('--lr_decay_rate', type=float, default=0.5,
                         help='decay rate for learning rate')
     parser.add_argument('--weight_decay', type=float, default=1e-4,
                         help='weight decay')
@@ -26,6 +26,7 @@ def parse_option():
     parser.add_argument('--train_checkpoint', type=int, default=100)
     parser.add_argument('--eval_checkpoint', type=int, default=1000)
     parser.add_argument('--dropout_p', type=float, default=0.5)
+    parser.add_argument('--lr_decay_step', type=int, default=1)
 
     # pretrain model settings
     parser.add_argument('--model_config', type=str, default="t5-base")
