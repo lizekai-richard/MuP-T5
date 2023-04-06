@@ -106,3 +106,5 @@ def train(config):
     for epoch in range(config.num_epochs):
         train_epoch(config, epoch, train_loader, val_loader, model, optimizer, metric, tokenizer)
         scheduler.step()
+        torch.save(model.state_dict(), "./saved_model/model_{}.pth".format(epoch))
+
